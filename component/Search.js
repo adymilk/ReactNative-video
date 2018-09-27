@@ -3,18 +3,24 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    WebView
 } from 'react-native';
 class Home extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    搜索页面
-                </Text>
-            </View>
+            <WebView
+                source={{uri: 'https://m.taobao.com/'}}
+                startInLoadingState={true}
+                renderLoading={this.webViewLoading}
+                allowsInlineMediaPlayback={true}
+            />
         )
     }
+
+
+
+
 };
 
 module.exports = Home;

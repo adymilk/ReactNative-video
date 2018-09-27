@@ -6,35 +6,58 @@ import {
     View,
     WebView
 } from 'react-native';
+
 class Home extends Component {
     render() {
         return (
             <WebView
-                source={{uri: 'https://blog.adymilk.cn'}}
+                source={{uri: 'http://211.149.159.75'}}
+                startInLoadingState={true}
+                renderLoading={this.webViewLoading}
+                allowsInlineMediaPlayback={true}
             />
         )
     }
+
+    webViewLoading(){
+        return(
+            <View style={styles.container}>
+                <Text>拼命加载中...</Text>
+            </View>
+        )
+    }
+
+
 };
 
 module.exports = Home;
 
 // AppRegistry.registerComponent('Home', () => Home);
-
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F5FCFF"
     },
-    welcome: {
+    rightContainer: {
+        flex: 1
+    },
+    title: {
         fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+        marginBottom: 8,
+        textAlign: "center"
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+    year: {
+        textAlign: "center"
     },
+    thumbnail: {
+        width: 53,
+        height: 81
+    },
+    list: {
+        paddingTop: 20,
+        backgroundColor: "#F5FCFF"
+    }
 });
