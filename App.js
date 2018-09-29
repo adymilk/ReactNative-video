@@ -11,10 +11,14 @@ import {Dimensions} from 'react-native'
 import Home from './component/Home'
 import Search from './component/Search'
 import Mine from './component/Mine'
+import Router from './util/Router'
+import playVideoPage from './component/playVideoPage'
+
+import {createStackNavigator} from "react-navigation";
 
 const deviceW = Dimensions.get('window').width
 
-const basePx = 375
+const basePx = 375;
 function px2dp(px) {
     return px *  deviceW / basePx
 }
@@ -27,6 +31,7 @@ export default class TabDemo extends Component {
     };
 
     render() {
+
         return (
             <TabNavigator style={styles.container}>
                 <TabNavigator.Item

@@ -8,7 +8,10 @@
   },
   "dependencies": {
     "react": "16.5.0",
+    "react-materialize": "^2.4.5",
     "react-native": "0.57.0",
+    "react-native-cardview": "^2.0.2",
+    "react-native-material-design": "^0.3.7",
     "react-native-tab-navigator": "^0.3.4",
     "react-navigation": "^2.16.0"
   },
@@ -19,6 +22,7 @@
     "metro-react-native-babel-preset": "0.45.4",
     "npm": "^6.4.1",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-material-cards": "^1.0.9",
     "react-native-vector-icons": "^5.0.0",
     "react-test-renderer": "16.5.0"
   },
