@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 //API
+
+// const { navigation } = this.props;
+// const id = navigation.getParam('id', 'NO-ID');
 const URL = 'http://api.apiopen.top/videoCategoryDetails?id=14';
 
 // 计算左侧的外边距，使其居中显示
@@ -65,8 +68,9 @@ class Home extends Component {
     }
 
     render() {
+
         return (
-                <View style={{flex:1,backgroundColor:'#fff'}}>
+            <View style={{flex:1,backgroundColor:'#fff'}}>
                 {
                     this.state.isLoaded ?
                         <ListView

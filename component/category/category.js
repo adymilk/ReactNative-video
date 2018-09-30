@@ -9,15 +9,12 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     Dimensions,
-    SafeAreaView
 } from 'react-native';
-import CardView from 'react-native-cardview'
-// 模拟豆瓣图书Api
-
-const URL = 'http://api.apiopen.top/videoCategoryDetails?id=14';
+import { createStackNavigator } from 'react-navigation';
+//API
+const API = 'http://api.apiopen.top/videoCategory';
 
 // 计算左侧的外边距，使其居中显示
-
 const {width,height} = Dimensions.get('window');
 const cols = 2;
 const marginLeft = 8;
@@ -26,7 +23,14 @@ const card_width = Number.parseInt((width - (cols+1)*marginLeft) / (cols));
 const card_height = 120;
 const hMargin = 10;
 
-export default class Main extends Component {
+
+import listVideo from './listVideo'
+
+class category extends Component {
+    static navigationOptions = {
+        title: '视频分类',
+
+    };
 
     constructor(props){
         super(props);
@@ -41,10 +45,10 @@ export default class Main extends Component {
     }
 
     fetchData(){
-        fetch(URL)
+        fetch(API)
             .then((response) => response.json())
             .then((data) => {
-                let dataList = data.result;
+                let dataList = data.result.itemList;
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
                     isLoaded:true
@@ -63,10 +67,6 @@ export default class Main extends Component {
     render() {
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerTxt}>杂志列表</Text>
-                </View>
-
                 {
                     this.state.isLoaded ?
                         <ListView
@@ -85,17 +85,51 @@ export default class Main extends Component {
     // 注意TouchableOpacity和内层View容器的样式
     _renderRow(rowData){
         return (
-            <TouchableOpacity style={styles.wrapStyle} activeOpacity={0.5} onPress={()=>alert(rowData.data.content.data.title)}>
+            <TouchableOpacity
+                style={styles.wrapStyle}
+                activeOpacity={0.5}
+                onPress={() => this.pushTolistVideo(rowData.data)}
+            >
+
                 <View style={styles.innerView}>
-                    <Image source={{uri:rowData.data.content.data.cover.feed}} style={styles.imgView} />
-                    <Text style={styles.text}>{rowData.data.content.data.title}</Text>
+                    <Image source={{uri:rowData.data.icon}} style={styles.imgView} />
+                    <Text style={styles.title}>{rowData.data.title ? (rowData.data.title.length > 20 ? rowData.data.title.substr(0, 20) + "..." : rowData.data.title) : ""}</Text>
+
                 </View>
             </TouchableOpacity>
         )
     }
 
 
+    pushTolistVideo(data){
+        this.props.navigation.navigate('listVideo',{
+            id: data.id,
+        })
+
+    }
+
 }
+
+
+const RootStack = createStackNavigator(
+    {
+        Home: category,
+        listVideo: listVideo,
+    },
+    {
+        initialRouteName: 'Home',
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: '#3496f0',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        },
+    }
+);
+
 
 const styles = StyleSheet.create({
     headerContainer:{
@@ -119,7 +153,9 @@ const styles = StyleSheet.create({
         // 多行显示
         flexWrap:'wrap',
         // 侧轴方向
-        backgroundColor: '#fcf4fb'
+        backgroundColor: '#e7e1ea',
+        paddingBottom: 50,
+
     },
     wrapStyle:{
         width: card_width,
@@ -127,17 +163,29 @@ const styles = StyleSheet.create({
         marginLeft:marginLeft,
         marginTop:hMargin,
         backgroundColor: 'white',
+        borderRadius: 5,
     },
     innerView:{
         width: card_width,
         height:card_height+50,
     },
     imgView:{
-        borderRadius: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
         width:card_width,
         height:card_height
     },
     title:{
-
+        padding: 5,
+        width: card_width,
+        color: '#2c2c2c',
     }
 });
+
+export default class App extends React.Component {
+    render() {
+        return <RootStack />;
+    }
+}
+
+

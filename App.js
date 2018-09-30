@@ -9,12 +9,9 @@ import {Dimensions} from 'react-native'
 
 //引入外部组件
 import Home from './component/Home'
-import Search from './component/Search'
-import Mine from './component/Mine'
-import Router from './util/Router'
-import playVideoPage from './component/playVideoPage'
-
-import {createStackNavigator} from "react-navigation";
+import Search from './component/category/category'
+import Setting from './component/Setting'
+// import RootStack from './util/Router'
 
 const deviceW = Dimensions.get('window').width
 
@@ -22,13 +19,13 @@ const basePx = 375;
 function px2dp(px) {
     return px *  deviceW / basePx
 }
-
-
-
 export default class TabDemo extends Component {
-    state= {
-        selectedTab: 'home'
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedTab: 'home',
+        };
+    }
 
     render() {
 
@@ -40,17 +37,17 @@ export default class TabDemo extends Component {
                     selectedTitleStyle={{color: "#3496f0"}}
                     renderIcon={() => <Icon name="home" size={px2dp(22)} color="#666"/>}
                     renderSelectedIcon={() => <Icon name="home" size={px2dp(22)} color="#3496f0"/>}
-                    badgeText="1"
+                    // badgeText="1"
                     onPress={() => this.setState({selectedTab: 'home'})}>
                     <Home/>
                 </TabNavigator.Item>
 
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'search'}
-                    title="搜索"
+                    title="分类"
                     selectedTitleStyle={{color: "#3496f0"}}
-                    renderIcon={() => <Icon name="search" size={px2dp(22)} color="#666"/>}
-                    renderSelectedIcon={() => <Icon name="search" size={px2dp(22)} color="#3496f0"/>}
+                    renderIcon={() => <Icon name="list" size={px2dp(22)} color="#666"/>}
+                    renderSelectedIcon={() => <Icon name="list" size={px2dp(22)} color="#3496f0"/>}
                     onPress={() => this.setState({selectedTab: 'search'})}>
                     <Search/>
                 </TabNavigator.Item>
@@ -59,10 +56,10 @@ export default class TabDemo extends Component {
                     selected={this.state.selectedTab === 'profile'}
                     title="我的"
                     selectedTitleStyle={{color: "#3496f0"}}
-                    renderIcon={() => <Icon name="envelope" size={px2dp(22)} color="#666"/>}
-                    renderSelectedIcon={() => <Icon name="envelope" size={px2dp(22)} color="#3496f0"/>}
+                    renderIcon={() => <Icon name="cog" size={px2dp(22)} color="#666"/>}
+                    renderSelectedIcon={() => <Icon name="cog" size={px2dp(22)} color="#3496f0"/>}
                     onPress={() => this.setState({selectedTab: 'profile'})}>
-                    <Mine/>
+                    <Setting/>
                 </TabNavigator.Item>
             </TabNavigator>
         );
