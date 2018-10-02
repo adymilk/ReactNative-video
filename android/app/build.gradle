@@ -143,12 +143,11 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-keep-awake')
     compile project(':react-native-video')
-    compile project(':react-native-cardview')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-vector-icons') //新添加的
-    compile project(':react-native-cardview')
+
 }
 
 // Run this once to be able to run the application with BUCK

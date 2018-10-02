@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
+    StatusBar,
     StyleSheet,
     Text,
     View,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 //API
-const URL = 'http://api.apiopen.top/videoCategoryDetails?id=14';
+const URL = 'http://api.apiopen.top/todayVideo';
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -24,11 +24,11 @@ const card_height = 120;
 const hMargin = 10;
 
 
-import playVideoPage from '../component/playVideoPage'
 
 class Home extends Component {
     static navigationOptions = {
-        title: '创意视频',
+        // title: '今日更新',
+        header:null
 
     };
 
@@ -48,7 +48,8 @@ class Home extends Component {
         fetch(URL)
             .then((response) => response.json())
             .then((data) => {
-                let dataList = data.result;
+                let dataList = (data.result).splice(1).splice(6);
+                console.log(dataList)
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
                     isLoaded:true
@@ -93,7 +94,8 @@ class Home extends Component {
 
                 <View style={styles.innerView}>
                     <Image source={{uri:rowData.data.content.data.cover.feed}} style={styles.imgView} />
-                    <Text style={styles.title}>{rowData.data.content.data.title ? (rowData.data.content.data.title.length > 20 ? rowData.data.content.data.title.substr(0, 20) + "..." : rowData.data.content.data.title) : ""}</Text>
+                    <Text style={styles.categoryTitle}>{rowData.data.content.data.title ? (rowData.data.content.data.title.length > 18 ? rowData.data.content.data.title.substr(0, 18) + "..." : rowData.data.content.data.title) : ""}</Text>
+
 
                 </View>
             </TouchableOpacity>
@@ -113,6 +115,8 @@ class Home extends Component {
 
 }
 
+
+import playVideoPage from './VideoPlayDetail'
 
 const RootStack = createStackNavigator(
     {
@@ -135,21 +139,6 @@ const RootStack = createStackNavigator(
 
 
 const styles = StyleSheet.create({
-    headerContainer:{
-        height:30,
-        backgroundColor:'#398DEE',
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    headerTxt:{
-        color:'#fff',
-        fontSize:14,
-    },
-    indicatorStyle:{
-        marginTop:30,
-        justifyContent:'center',
-        alignItems:'center'
-    },
     listViewStyle:{
         // 改变主轴的方向
         flexDirection:'row',
@@ -157,7 +146,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         // 侧轴方向
         backgroundColor: '#e7e1ea',
-        paddingBottom: 50,
+        paddingBottom: 120
 
     },
     wrapStyle:{
@@ -170,7 +159,7 @@ const styles = StyleSheet.create({
     },
     innerView:{
         width: card_width,
-        height:card_height+50,
+        height:card_height+5,
     },
     imgView:{
         borderTopLeftRadius: 5,
@@ -178,7 +167,8 @@ const styles = StyleSheet.create({
         width:card_width,
         height:card_height
     },
-    title:{
+    categoryTitle:{
+        textAlign:'center',
         padding: 5,
         width: card_width,
         color: '#2c2c2c',
@@ -187,7 +177,14 @@ const styles = StyleSheet.create({
 
 export default class App extends React.Component {
     render() {
-        return <RootStack />;
+        return(
+            <View style={{flex: 1}}>
+                <StatusBar backgroundColor="#3496f0"/>
+                <RootStack />
+            </View>
+
+            )
+        ;
     }
 }
 

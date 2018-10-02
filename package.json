@@ -11,7 +11,6 @@
     "react-materialize": "^2.4.5",
     "react-native": "0.57.0",
     "react-native-af-video-player": "^0.2.1",
-    "react-native-cardview": "^2.0.2",
     "react-native-material-design": "^0.3.7",
     "react-native-tab-navigator": "^0.3.4",
     "react-navigation": "^2.16.0"

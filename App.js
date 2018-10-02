@@ -1,88 +1,33 @@
-import React, { Component } from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-} from 'react-native';
-import TabNavigator from 'react-native-tab-navigator';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import {Dimensions} from 'react-native'
+import React from 'react';
+import { Text, View } from 'react-native';
+import { createMaterialTopTabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 
-//引入外部组件
-import Home from './component/Home'
-import Search from './component/category/category'
-import Setting from './component/Setting'
-// import RootStack from './util/Router'
+import HomeScreen from './component/Home'
+import Category from './component/Category'
+import Live from './component/Live'
+import Dance from './component/Dance'
+import Photos from './component/Photos'
+import movement from './component/movement'
 
-const deviceW = Dimensions.get('window').width
+export default createMaterialTopTabNavigator(
+    {
+        推荐: HomeScreen ,
+        直播: Live ,
+        分区: Category,
+        舞蹈: Dance,
+        相册: Photos,
+        动态: movement,
+    },
+    {
+        navigationOptions: ({ navigation }) => ({
+            // header: null,
+            selectedTab: '分区'
 
-const basePx = 375;
-function px2dp(px) {
-    return px *  deviceW / basePx
-}
-export default class TabDemo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedTab: 'home',
-        };
+        }),
+        tabBarOptions: {
+            activeTintColor: '#ffffff',
+            inactiveTintColor: '#ffffff',
+            tabBarPosition: 'bottom'
+        },
     }
-
-    render() {
-
-        return (
-            <TabNavigator style={styles.container}>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'home'}
-                    title="首页"
-                    selectedTitleStyle={{color: "#3496f0"}}
-                    renderIcon={() => <Icon name="home" size={px2dp(22)} color="#666"/>}
-                    renderSelectedIcon={() => <Icon name="home" size={px2dp(22)} color="#3496f0"/>}
-                    // badgeText="1"
-                    onPress={() => this.setState({selectedTab: 'home'})}>
-                    <Home/>
-                </TabNavigator.Item>
-
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'search'}
-                    title="分类"
-                    selectedTitleStyle={{color: "#3496f0"}}
-                    renderIcon={() => <Icon name="list" size={px2dp(22)} color="#666"/>}
-                    renderSelectedIcon={() => <Icon name="list" size={px2dp(22)} color="#3496f0"/>}
-                    onPress={() => this.setState({selectedTab: 'search'})}>
-                    <Search/>
-                </TabNavigator.Item>
-
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'profile'}
-                    title="我的"
-                    selectedTitleStyle={{color: "#3496f0"}}
-                    renderIcon={() => <Icon name="cog" size={px2dp(22)} color="#666"/>}
-                    renderSelectedIcon={() => <Icon name="cog" size={px2dp(22)} color="#3496f0"/>}
-                    onPress={() => this.setState({selectedTab: 'profile'})}>
-                    <Setting/>
-                </TabNavigator.Item>
-            </TabNavigator>
-        );
-    }
-}
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
-
-
-AppRegistry.registerComponent('TabDemo', () => TabDemo);
+);

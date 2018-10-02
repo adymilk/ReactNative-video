@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import {Image, Text, View} from 'react-native';
+import React from "react";
+import {Text, View} from "react-native";
 
-class Setting extends Component {
+class Setting extends React.Component {
     render() {
         return (
-            <View>
-                <Text>ddd</Text>
-                <Image source={{uri: 'http://oe3vwrk94.bkt.clouddn.com/back.png'}}
-                       style={{width: 400, height: 400}} />
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>设置界面功能待开发...</Text>
             </View>
         );
     }
 }
 
 export default Setting;
+

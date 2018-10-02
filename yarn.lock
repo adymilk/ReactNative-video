@@ -5250,9 +5250,9 @@ react-native-screens@^1.0.0-alpha.11:
   version "1.0.0-alpha.12"
   resolved "http://registry.npm.taobao.org/react-native-screens/download/react-native-screens-1.0.0-alpha.12.tgz#5953c39c9dbfbe324610005e07d85a416081c48c"
 
-"react-native-slider@git+https://github.com/abbasfreestyle/react-native-slider.git":
+"react-native-slider@https://github.com/abbasfreestyle/react-native-slider.git":
   version "0.11.0"
-  resolved "git+https://github.com/abbasfreestyle/react-native-slider.git#c53b4965c5e4c3ec258479417898dece367e603e"
+  resolved "https://github.com/abbasfreestyle/react-native-slider.git#c53b4965c5e4c3ec258479417898dece367e603e"
   dependencies:
     prop-types "^15.5.6"
 
