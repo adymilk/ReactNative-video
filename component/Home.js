@@ -48,7 +48,17 @@ class Home extends Component {
         fetch(URL)
             .then((response) => response.json())
             .then((data) => {
-                let dataList = (data.result).splice(1).splice(6);
+                let dataList = [];
+                for(let i=0; i<data.result.length; i++){
+                    if (data.result[i].type !== "textCard"){
+                        if (data.result[i].data.content.data.title === ""){
+                            data.result[i].data.content.data.title = data.result[i].data.content.data.description;
+                        }
+
+                        dataList.push(data.result[i]);
+                    }
+                }
+
                 console.log(dataList)
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
@@ -67,7 +77,7 @@ class Home extends Component {
 
     render() {
         return (
-                <View style={{flex:1,backgroundColor:'#fff'}}>
+            <View style={{flex:1,backgroundColor:'#fff'}}>
                 {
                     this.state.isLoaded ?
                         <ListView
@@ -89,7 +99,7 @@ class Home extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                onPress={() => this.pushToVideoDetail(rowData.data)}
+                onPress={() => this.pushToVideoDetail(rowData)}
             >
 
                 <View style={styles.innerView}>
@@ -104,11 +114,11 @@ class Home extends Component {
 
 
     pushToVideoDetail(data){
-        this.props.navigation.navigate('playVideoPage',{
-            icon: data.header.icon,
-            title: data.content.data.title,
-            playUrl: data.content.data.playUrl,
-            description: data.content.data.description
+        this.props.navigation.navigate('VideoPlayDetail',{
+            id: data.id,
+            title: data.data.content.data.title,
+            playUrl: data.data.content.data.playUrl,
+            description: data.data.content.data.description
         })
 
     }
@@ -116,12 +126,12 @@ class Home extends Component {
 }
 
 
-import playVideoPage from './VideoPlayDetail'
+import VideoPlayDetail from './VideoPlayDetail'
 
 const RootStack = createStackNavigator(
     {
         Home: Home,
-        playVideoPage: playVideoPage,
+        VideoPlayDetail: VideoPlayDetail,
     },
     {
         initialRouteName: 'Home',
@@ -183,9 +193,7 @@ export default class App extends React.Component {
                 <RootStack />
             </View>
 
-            )
-        ;
+        )
+            ;
     }
 }
-
-

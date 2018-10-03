@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import { WebView, View } from 'react-native';
+import {WebView, View, StyleSheet, ActivityIndicator} from 'react-native';
 
 const BASE_URL = "http://h.open.huajiao.com/l/index?&channelid=uclevel2&tag=live&uc_biz_str=S:custom|C:full_screen|M:true&liveid=";
 class LivePlayOnWebview extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            dataSource: null,
+            isLoaded:false
+        };
+    }
+
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
-        // Setup the header and tabBarVisible status
         const header = state.params && (state.params.fullscreen ? undefined : null)
-        const tabBarVisible = state.params ? state.params.fullscreen : true
         return {
-            // For stack navigators, you can hide the header bar like so
             header,
-            title: navigation.getParam('title', '获取title失败'),
-            // For the tab navigators, you can hide the tab bar like so
-            tabBarVisible,
         }
     }
 
@@ -29,8 +31,23 @@ class LivePlayOnWebview extends Component {
                 "$('#_live_video_header a').attr('href','javascript:;');"}
                 injectJavaScript={"$('.h5_player_pause').click();"}
             />
+
         );
     }
 }
+
+const styles = StyleSheet.create({
+    listViewStyle:{
+        // 改变主轴的方向
+        flexDirection:'row',
+        // 多行显示
+        flexWrap:'wrap',
+        // 侧轴方向
+        backgroundColor: '#e7e1ea',
+        paddingBottom: 120
+
+    },
+
+});
 
 export default LivePlayOnWebview;

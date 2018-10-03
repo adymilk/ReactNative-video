@@ -11,23 +11,18 @@ import movement from './component/movement'
 
 export default createMaterialTopTabNavigator(
     {
-        推荐: HomeScreen ,
         直播: Live ,
+        推荐: HomeScreen ,
         分区: Category,
         舞蹈: Dance,
         相册: Photos,
         动态: movement,
     },
     {
-        navigationOptions: ({ navigation }) => ({
-            // header: null,
-            selectedTab: '分区'
-
-        }),
-        tabBarOptions: {
-            activeTintColor: '#ffffff',
-            inactiveTintColor: '#ffffff',
-            tabBarPosition: 'bottom'
-        },
+        initialRouteName: '推荐',
+        tabBarPosition: 'top',
+        animationEnabled: true,
+        lazy: true,
+        optimizationsEnabled: true,
     }
 );
