@@ -15,14 +15,25 @@ const card_height = 120;
 const hMargin = 10;
 
 class CategoryList extends Component {
-
     static navigationOptions = ({ navigation }) => {
-
+        let header = undefined
+        let tabBarVisible = true
+        if (navigation.state.index > 0) {
+            tabBarVisible = false;
+        }
         return {
+            tabBarVisible,
+            header,
             title: navigation.getParam('title', '获取title失败'),
-            tabBarVisible: false
-        };
-    };
+            headerStyle: {
+                backgroundColor: '#3496f0',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }
+    }
 
 
     constructor(props){
@@ -100,7 +111,7 @@ class CategoryList extends Component {
     }
 
     pushToVideoDetailFromCategoryList(data){
-        this.props.navigation.navigate('playVideoPage',{
+        this.props.navigation.navigate('VideoPlayDetail',{
             icon: data.header.icon,
             title: data.content.data.title,
             playUrl: data.content.data.playUrl,

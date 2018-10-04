@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
+    Alert,
     StyleSheet,
     Text,
     View,
@@ -18,7 +18,7 @@ const theme = {
     title: '#FFF',
     more: '#fff',
     center: '#3496f0',
-    fullscreen: '#446984',
+    fullscreen: '#fff',
     volume: '#fff',
     scrubberThumb: '#fff',
     scrubberBar: '#fff',
@@ -47,12 +47,28 @@ const hMargin = 10;
 class VideoPlayDetail extends Component {
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
-        const header = state.params && (state.params.fullscreen ? null : undefined)
-        const tabBarVisible = state.params ? state.params.fullscreen : true
+        // const header = state.params && (state.params.fullscreen ? undefined : null)
+
+        // alert(state.params.fullscreen)
+        let header = undefined
+        if (state.params.fullscreen === false){
+            header = null
+        }
+        let tabBarVisible = true
+        if (navigation.state.index > 0) {
+            tabBarVisible = false;
+        }
         return {
+            tabBarVisible,
             header,
             title: navigation.getParam('title', '获取title失败'),
-            tabBarVisible,
+            headerStyle: {
+                backgroundColor: '#3496f0',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
         }
     }
 
@@ -72,7 +88,7 @@ class VideoPlayDetail extends Component {
 
     fetchData(id){
         id === 0 ? id = 110763 : id = id;
-        // alert(BASE_API);
+        // alert(id);
         fetch(BASE_API+id)
             .then((response) => response.json())
             .then((data) => {
@@ -109,7 +125,7 @@ class VideoPlayDetail extends Component {
         return (
 
 
-            <View style={{flex:1,backgroundColor:'#fff'}}>
+            <ScrollView style={{flex:1,backgroundColor: '#e7e1ea',}} ref='totop'>
                 <View style={styles.container}>
                     <Video
                         autoPlay={false}
@@ -121,7 +137,8 @@ class VideoPlayDetail extends Component {
                         rotateToFullScreen
                         playInBackground={true}
                         playWhenInactive={true}
-                        inlineOnly
+                        scrollBounce={true}
+                        lockPortraitOnFsExit={true}
                         theme={theme}
                     />
 
@@ -135,7 +152,7 @@ class VideoPlayDetail extends Component {
                         {
                             this.state.isLoaded ?
                                 <View style={styles.suggest_video_wrapper}>
-                                    <Text style={styles.videoTitle}>相关视频</Text>
+                                    <Text style={{margin: 8, color: '#000',fontSize: 17}}>相关视频</Text>
                                     <ListView
                                         dataSource={this.state.dataSource}
                                         renderRow={(rowData)=>this._renderRow(rowData)}
@@ -153,7 +170,7 @@ class VideoPlayDetail extends Component {
 
 
 
-            </View>
+            </ScrollView>
         );
     }
     // 注意TouchableOpacity和内层View容器的样式
@@ -181,6 +198,7 @@ class VideoPlayDetail extends Component {
 
 
     pushToVideoDetail(data){
+        this.refs.totop.scrollTo({x:0,y: 0,animated:true});
         this.props.navigation.navigate('VideoPlayDetail',{
             id: data.id,
             title: data.data.title,
@@ -211,10 +229,12 @@ class VideoPlayDetail extends Component {
 
 const styles = StyleSheet.create({
     video_header:{
-      padding: 10
+      padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 5,
     },
     suggest_video_wrapper:{
-        paddingBottom: 120
+        paddingBottom: 10
     },
     listViewStyle:{
         // 改变主轴的方向
@@ -268,7 +288,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     videoTitle:{
-        fontSize: 15,
+        fontSize: 17,
         color: '#000000'
     }
 });

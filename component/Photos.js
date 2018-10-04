@@ -25,11 +25,16 @@ const hMargin = 10;
 
 
 class category extends Component {
-    static navigationOptions = {
-        // title: '视频分类',
-        header: null,
-
-    };
+    static navigationOptions = ({ navigation }) => {
+        const { state } = navigation
+        const header = state.params && (state.params.fullscreen ? null : undefined)
+        const tabBarVisible = state.params ? state.params.fullscreen : true
+        return {
+            header: null,
+            // title: navigation.getParam('title', '获取title失败'),
+            tabBarVisible: false,
+        }
+    }
 
     constructor(props){
         super(props);

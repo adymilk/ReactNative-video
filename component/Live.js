@@ -111,32 +111,12 @@ class Live extends Component {
     pushTolistVideo(data){
         this.props.navigation.navigate('LivePlayOnWebview',{
             relateid: data.relateid,
+            title: data.title,
         })
 
     }
 
 }
-
-import LivePlayOnWebview from './LivePlayOnWebview'
-
-const RootStack = createStackNavigator(
-    {
-        Live: Live,
-        LivePlayOnWebview: LivePlayOnWebview,
-    },
-    {
-        initialRouteName: 'Live',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: '#3496f0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
-    }
-);
 
 
 const styles = StyleSheet.create({
@@ -185,8 +165,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class App extends React.Component {
-    render() {
-        return <RootStack />;
-    }
-}
+export default Live;

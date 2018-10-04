@@ -1,17 +1,19 @@
-import {createStackNavigator} from "react-navigation";
-import Home from "../component/Home";
-import category from "../component/Category";
-import playVideoPage from "../component/VideoPlayDetail";
+import React from 'react';
+import {
+    View,
+} from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
+import Suggest from '../component/Suggest'
+import VideoPlayDetail from '../component/VideoPlayDetail'
 
 const RootStack = createStackNavigator(
     {
-        Home: Home,
-        playVideoPage: playVideoPage,
-        category: category,
+        Suggest: Suggest,
+        VideoPlayDetail: VideoPlayDetail,
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Suggest',
         navigationOptions: {
             headerStyle: {
                 backgroundColor: '#3496f0',
@@ -24,4 +26,16 @@ const RootStack = createStackNavigator(
     }
 );
 
-export default RootStack;
+
+
+export default class App extends React.Component {
+    render() {
+        return(
+            <View>
+                <RootStack />
+            </View>
+
+        )
+            ;
+    }
+}

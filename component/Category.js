@@ -111,28 +111,6 @@ class category extends Component {
 
 }
 
-import CategoryList from './CategoryList'
-import playVideoPage from './VideoPlayDetail'
-
-const RootStack = createStackNavigator(
-    {
-        category: category,
-        CategoryList: CategoryList,
-        playVideoPage: playVideoPage,
-    },
-    {
-        initialRouteName: 'category',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: '#3496f0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
-    }
-);
 
 
 const styles = StyleSheet.create({
@@ -173,8 +151,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class App extends React.Component {
-    render() {
-        return <RootStack />;
-    }
-}
+export default category;

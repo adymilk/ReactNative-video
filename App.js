@@ -1,28 +1,88 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation'; // 1.0.0-beta.27
+import React,{Component} from 'react';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {createMaterialTopTabNavigator, createStackNavigator} from 'react-navigation';
 
-import HomeScreen from './component/Home'
-import Category from './component/Category'
+import Suggest from './component/Suggest'
 import Live from './component/Live'
 import Dance from './component/Dance'
 import Photos from './component/Photos'
 import movement from './component/movement'
+import VideoPlayDetail from './component/VideoPlayDetail'
+import LivePlayOnWebview from './component/LivePlayOnWebview'
+import Category from "./component/Category";
+import CategoryList from "./component/CategoryList";
 
-export default createMaterialTopTabNavigator(
+
+const SuggestStack = createStackNavigator(
     {
-        直播: Live ,
-        推荐: HomeScreen ,
-        分区: Category,
+        Suggest: Suggest,
+    }
+);
+
+
+const movementStack = createStackNavigator(
+    {
+        movement: movement,
+    },
+);
+
+
+
+
+const LiveStack = createStackNavigator(
+    {
+        Live: Live,
+    }
+);
+
+const CategoryStack = createStackNavigator(
+    {
+        Category: Category,
+    }
+);
+
+
+
+const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
+    {
+
+        直播: LiveStack ,
+        推荐: SuggestStack ,
+        分区: CategoryStack,
         舞蹈: Dance,
         相册: Photos,
-        动态: movement,
+        动态: movementStack
     },
     {
         initialRouteName: '推荐',
-        tabBarPosition: 'top',
         animationEnabled: true,
         lazy: true,
         optimizationsEnabled: true,
+        // swipeEnabled: false,
     }
 );
+
+const RootStack = createStackNavigator(
+    {
+        tabs: MaterialTopTabNavigator,
+        VideoPlayDetail: VideoPlayDetail,
+        LivePlayOnWebview: LivePlayOnWebview,
+        CategoryStack: CategoryStack,
+        CategoryList: CategoryList,
+    },
+    {
+        navigationOptions: {
+            header: null,
+        },
+    }
+);
+export default class App extends Component {
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <StatusBar backgroundColor="#3496f0"/>
+                <RootStack />
+            </SafeAreaView>
+        )
+    }
+}

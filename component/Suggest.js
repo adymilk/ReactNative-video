@@ -25,12 +25,15 @@ const hMargin = 10;
 
 
 
-class Home extends Component {
-    static navigationOptions = {
-        // title: '今日更新',
-        header:null
+class Suggest extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: null,
+            // title: navigation.getParam('title', '获取title失败'),
+            tabBarVisible: false,
 
-    };
+        }
+    }
 
     constructor(props){
         super(props);
@@ -125,29 +128,6 @@ class Home extends Component {
 
 }
 
-
-import VideoPlayDetail from './VideoPlayDetail'
-
-const RootStack = createStackNavigator(
-    {
-        Home: Home,
-        VideoPlayDetail: VideoPlayDetail,
-    },
-    {
-        initialRouteName: 'Home',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: '#3496f0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
-    }
-);
-
-
 const styles = StyleSheet.create({
     listViewStyle:{
         // 改变主轴的方向
@@ -156,7 +136,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         // 侧轴方向
         backgroundColor: '#e7e1ea',
-        paddingBottom: 120
+        paddingBottom: 10
 
     },
     wrapStyle:{
@@ -178,22 +158,11 @@ const styles = StyleSheet.create({
         height:card_height
     },
     categoryTitle:{
-        textAlign:'center',
+        textAlign:'left',
         padding: 5,
         width: card_width,
         color: '#2c2c2c',
     }
 });
 
-export default class App extends React.Component {
-    render() {
-        return(
-            <View style={{flex: 1}}>
-                <StatusBar backgroundColor="#3496f0"/>
-                <RootStack />
-            </View>
-
-        )
-            ;
-    }
-}
+export default Suggest;
