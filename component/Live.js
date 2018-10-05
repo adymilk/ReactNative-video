@@ -93,7 +93,7 @@ class Live extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                onPress={() => this.pushTolistVideo(rowData)}
+                onPress={() => this.pushTo('LivePlayOnWebview',rowData)}
             >
 
                 <View style={styles.innerView}>
@@ -108,8 +108,8 @@ class Live extends Component {
     }
 
 
-    pushTolistVideo(data){
-        this.props.navigation.navigate('LivePlayOnWebview',{
+    pushTo(view,data){
+        this.props.navigation.navigate(view,{
             relateid: data.relateid,
             title: data.title,
         })

@@ -3,7 +3,7 @@ import {ActivityIndicator, Dimensions, Image, ListView, StyleSheet, Text, Toucha
 import {createStackNavigator} from "react-navigation";
 
 //API
-const URL = 'http://api.apiopen.top/videoCategoryDetails?id=';
+    const URL = 'http://api.apiopen.top/videoCategoryDetails?id=';
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -83,7 +83,9 @@ class CategoryList extends Component {
                             dataSource={this.state.dataSource}
                             renderRow={(rowData)=>this._renderRow(rowData)}
                             contentContainerStyle={styles.listViewStyle}
-                        /> :
+                        />
+
+                        :
                         <View style={styles.indicatorStyle}>
                             <ActivityIndicator size='large' color='#398DEE'/>
                         </View>
@@ -112,6 +114,7 @@ class CategoryList extends Component {
 
     pushToVideoDetailFromCategoryList(data){
         this.props.navigation.navigate('VideoPlayDetail',{
+            id: data.header.id,
             icon: data.header.icon,
             title: data.content.data.title,
             playUrl: data.content.data.playUrl,

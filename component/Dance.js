@@ -10,7 +10,6 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
 
 //请求数量
 const num = 60;
@@ -94,7 +93,7 @@ class Dance extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                onPress={() => this.pushTolistVideo(rowData)}
+                onPress={() => this.pushTo('LivePlayOnWebview',rowData)}
             >
 
                 <View style={styles.innerView}>
@@ -109,35 +108,15 @@ class Dance extends Component {
     }
 
 
-    pushTolistVideo(data){
+    pushTo(view,data){
         this.props.navigation.navigate('LivePlayOnWebview',{
             relateid: data.relateid,
+            title: data.title,
         })
 
     }
 
 }
-
-import LivePlayOnWebview from './LivePlayOnWebview'
-const RootStack = createStackNavigator(
-    {
-        Dance: Dance,
-        LivePlayOnWebview: LivePlayOnWebview,
-    },
-    {
-        initialRouteName: 'Dance',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: '#3496f0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
-    }
-);
-
 
 const styles = StyleSheet.create({
 
@@ -185,8 +164,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class App extends React.Component {
-    render() {
-        return <RootStack />;
-    }
-}
+export default Dance;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-export default class HelloWorldApp extends Component {
+export default class Setting extends Component {
     static navigationOptions = ({ navigation }) => {
         let header = undefined
         let tabBarVisible = true
@@ -9,8 +9,7 @@ export default class HelloWorldApp extends Component {
             tabBarVisible = false;
         }
         return {
-            tabBarVisible,
-            header,
+            header: false,
             title: navigation.getParam('title', '获取title失败'),
             headerStyle: {
                 backgroundColor: '#3496f0',
@@ -21,10 +20,11 @@ export default class HelloWorldApp extends Component {
             },
         }
     }
+
     render() {
         return (
             <View>
-                <Text>Hello world!</Text>
+                <Text>设置界面待开发!</Text>
             </View>
         );
     }

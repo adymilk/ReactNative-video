@@ -90,7 +90,7 @@ class category extends Component {
                 onPress={() => this.pushTolistVideo(rowData.data)}
             >
 
-                <View style={styles.innerView}>
+                <View>
                     <Image source={{uri:rowData.data.icon}} style={styles.imgView} />
                     <Text style={styles.categoryTitle}>{(rowData.data.title).substr(1,rowData.data.title.length)}</Text>
 
@@ -126,16 +126,13 @@ const styles = StyleSheet.create({
     },
     wrapStyle:{
         width: card_width,
-        height:card_height+50,
+        height:card_height + card_height/3,
         marginLeft:marginLeft,
         marginTop:hMargin,
         backgroundColor: 'white',
         borderRadius: 5,
     },
-    innerView:{
-        width: card_width,
-        height:card_height+5,
-    },
+
     imgView:{
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
@@ -147,6 +144,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         padding: 5,
         width: card_width,
+        height:card_height/3,
         color: '#2c2c2c',
     }
 });

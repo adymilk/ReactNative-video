@@ -24,16 +24,14 @@ const card_height = 120;
 const hMargin = 10;
 
 
-
 class Suggest extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             header: null,
             // title: navigation.getParam('title', '获取title失败'),
             tabBarVisible: false,
-
         }
-    }
+    };
 
     constructor(props){
         super(props);
@@ -108,13 +106,10 @@ class Suggest extends Component {
                 <View style={styles.innerView}>
                     <Image source={{uri:rowData.data.content.data.cover.feed}} style={styles.imgView} />
                     <Text style={styles.categoryTitle}>{rowData.data.content.data.title ? (rowData.data.content.data.title.length > 18 ? rowData.data.content.data.title.substr(0, 18) + "..." : rowData.data.content.data.title) : ""}</Text>
-
-
                 </View>
             </TouchableOpacity>
         )
     }
-
 
     pushToVideoDetail(data){
         this.props.navigation.navigate('VideoPlayDetail',{
@@ -123,9 +118,7 @@ class Suggest extends Component {
             playUrl: data.data.content.data.playUrl,
             description: data.data.content.data.description
         })
-
     }
-
 }
 
 const styles = StyleSheet.create({

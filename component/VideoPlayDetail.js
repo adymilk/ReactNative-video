@@ -8,7 +8,9 @@ import {
     ListView,
     TouchableOpacity,
     ActivityIndicator,
-    Dimensions, ScrollView,
+    Dimensions,
+    ScrollView,
+    BackHandler,
 } from 'react-native';
 import Video from 'react-native-af-video-player'
 
@@ -210,9 +212,9 @@ class VideoPlayDetail extends Component {
 
     onFullScreen(status) {
         // Set the params to pass in fullscreen status to navigationOptions
-        this.props.navigation.setParams({
-            fullscreen: !status
-        })
+        // this.props.navigation.setParams({
+        //     fullscreen: !status
+        // })
     }
 
     onMorePress() {
