@@ -50,7 +50,7 @@ class VideoPlayDetail extends Component {
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
         // const header = state.params && (state.params.fullscreen ? undefined : null)
-
+        //
         // alert(state.params.fullscreen)
         let header = undefined
         if (state.params.fullscreen === false){
@@ -212,9 +212,9 @@ class VideoPlayDetail extends Component {
 
     onFullScreen(status) {
         // Set the params to pass in fullscreen status to navigationOptions
-        // this.props.navigation.setParams({
-        //     fullscreen: !status
-        // })
+        this.props.navigation.setParams({
+            fullscreen: !status
+        })
     }
 
     onMorePress() {

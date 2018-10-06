@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
@@ -10,9 +9,8 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
 //API
-const API = 'https://activity.uc.cn/uclive2017/roomlist?__dt=1392&__t=1538401886632&uc_param_str=dsdnfrpfbivesscpgimibtbmnijblauputogpintnwchgd&tag=live&num=30&entry=zbyp';
+const URL = 'http://api.apiopen.top/todayVideo';
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -24,17 +22,14 @@ const card_height = 120;
 const hMargin = 10;
 
 
-class category extends Component {
+class Suggest extends Component {
     static navigationOptions = ({ navigation }) => {
-        const { state } = navigation
-        const header = state.params && (state.params.fullscreen ? null : undefined)
-        const tabBarVisible = state.params ? state.params.fullscreen : true
         return {
             header: null,
             // title: navigation.getParam('title', '获取title失败'),
             tabBarVisible: false,
         }
-    }
+    };
 
     constructor(props){
         super(props);
@@ -49,11 +44,21 @@ class category extends Component {
     }
 
     fetchData(){
-        fetch(API)
+        fetch(URL)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
-                let dataList = data.data.feeds;
+                let dataList = [];
+                for(let i=0; i<data.result.length; i++){
+                    if (data.result[i].type !== "textCard"){
+                        if (data.result[i].data.content.data.title === ""){
+                            data.result[i].data.content.data.title = data.result[i].data.content.data.description;
+                        }
+
+                        dataList.push(data.result[i]);
+                    }
+                }
+
+                console.log(dataList)
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
                     isLoaded:true
@@ -93,56 +98,28 @@ class category extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                // onPress={() => this.pushTolistVideo(rowData.data)}
+                onPress={() => this.pushToVideoDetail(rowData)}
             >
 
                 <View style={styles.innerView}>
-                    <Image source={{uri:rowData.image}} style={styles.imgView} />
-                    <Text style={styles.categoryTitle}>{(rowData.nickname)}</Text>
-
+                    <Image source={{uri:rowData.data.content.data.cover.feed}} style={styles.imgView} />
+                    <Text style={styles.categoryTitle}>{rowData.data.content.data.title ? (rowData.data.content.data.title.length > 18 ? rowData.data.content.data.title.substr(0, 18) + "..." : rowData.data.content.data.title) : ""}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
 
-
-    pushTolistVideo(data){
-        const title = (data.title).substr(1,data.title.length);
-        this.props.navigation.navigate('CategoryList',{
+    pushToVideoDetail(data){
+        this.props.navigation.navigate('VideoPlayDetail',{
             id: data.id,
-            title: title,
+            title: data.data.content.data.title,
+            playUrl: data.data.content.data.playUrl,
+            description: data.data.content.data.description
         })
-
     }
-
 }
 
-import CategoryList from './CategoryList'
-import playVideoPage from './VideoPlayDetail'
-
-const RootStack = createStackNavigator(
-    {
-        category: category,
-        CategoryList: CategoryList,
-        playVideoPage: playVideoPage,
-    },
-    {
-        initialRouteName: 'category',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: '#3496f0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
-    }
-);
-
-
 const styles = StyleSheet.create({
-
     listViewStyle:{
         // 改变主轴的方向
         flexDirection:'row',
@@ -150,6 +127,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         // 侧轴方向
         backgroundColor: '#e7e1ea',
+        paddingBottom: 10
 
     },
     wrapStyle:{
@@ -171,15 +149,11 @@ const styles = StyleSheet.create({
         height:card_height
     },
     categoryTitle:{
-        textAlign:'center',
+        textAlign:'left',
         padding: 5,
         width: card_width,
         color: '#2c2c2c',
     }
 });
 
-export default class App extends React.Component {
-    render() {
-        return <RootStack />;
-    }
-}
+export default Suggest;

@@ -1,5 +1,5 @@
 {
-  "name": "ten video",
+  "name": "hello world",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "react-native": "0.57.0",
     "react-native-af-video-player": "^0.2.1",
     "react-native-material-design": "^0.3.7",
+    "react-native-snap-carousel": "^3.7.5",
     "react-native-tab-navigator": "^0.3.4",
     "react-navigation": "^2.16.0"
   },
