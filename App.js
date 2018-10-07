@@ -1,3 +1,3 @@
-import app from './src/util/Router'
+import app from './src/Router'
 
 export default app;

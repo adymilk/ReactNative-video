@@ -1,18 +1,19 @@
 import React,{Component} from 'react';
 import {Image, SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {createDrawerNavigator, createMaterialTopTabNavigator, createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Suggest from '../component/suggest/Suggest'
-import Live from '../component/live/Live'
-import Dance from '../component/Dance'
-import Photos from '../component/Photos'
-import mv from '../component/movement'
-import VideoPlayDetail from '../component/video/VideoPlayDetail'
-import LivePlayOnWebview from '../component/live/LivePlayOnWebview'
-import Category from "../component/category/Category";
-import CategoryList from "../component/category/CategoryList";
-import Setting from "../component/Setting";
-import Header from "../component/header/Header";
+import Suggest from './component/suggest/Suggest'
+import Live from './component/live/Live'
+import Dance from './component/category/Dance'
+import Photos from './component/Photos'
+import mv from './component/movement'
+import VideoPlayDetail from './component/video/VideoPlayDetail'
+import LivePlayOnWebview from './component/live/LivePlayOnWebview'
+import Category from "./component/category/Category";
+import CategoryList from "./component/category/CategoryList";
+import Setting from "./component/Setting";
+import Header from "./component/header/Header";
 
 
 const SuggestStack = createStackNavigator(
@@ -44,12 +45,6 @@ const CategoryStack = createStackNavigator(
 );
 
 
-const DanceStack = createStackNavigator(
-    {
-        Dance: Dance,
-    },
-);
-
 
 
 const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
@@ -58,17 +53,17 @@ const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
         直播: LiveStack ,
         推荐: SuggestStack ,
         分区: CategoryStack,
-        舞蹈: DanceStack,
+        // 舞蹈: DanceStack,
         相册: Photos,
         MV: movementStack
     },
     {
-        // tabBarComponent: Setting,
         initialRouteName: '推荐',
         animationEnabled: true,
         lazy: true,
-        optimizationsEnabled: true,
         // swipeEnabled: false,
+        scrollEnabled: true,
+
     }
 );
 
@@ -79,6 +74,7 @@ const TabStack = createStackNavigator(
         LivePlayOnWebview: LivePlayOnWebview,
         CategoryStack: CategoryStack,
         CategoryList: CategoryList,
+        Dance: Dance,
 
     },
     {
@@ -230,7 +226,7 @@ const RootStack = createDrawerNavigator(
         // contentComponent:CustomDrawer,            //自定义侧边栏组件
         drawerBackgroundColor:'#fff4f7',          //侧边栏背景色
         contentOptions:{                          //对侧边栏中的标签详细设置如下↓
-            activeTintColor:'#936eff',                 //标签激活时的前景色
+            activeTintColor:'#3496f0',                 //标签激活时的前景色
             activeBackgroundColor:'#e7e1ea',           //标签激活时的背景色
             inactiveTintColor:'#3c3c3c',               //标签未激活时的前景色
             // inactiveBackgroundColor:'#c1e1ff',         //标签未激活时的背景色
@@ -243,8 +239,8 @@ const RootStack = createDrawerNavigator(
             },
             labelStyle:{                               //标签文字样式
                 fontSize:16,
-                forwardRef: '#3c3c3c',
-                activeTintColor: '#936eff',
+                inactiveTintColor: '#3c3c3c',
+                activeTintColor: '#3496f0',
             },
             // iconContainerStyle:styles.icon,            //标签icon样式
         }
@@ -255,11 +251,10 @@ export default class App extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar backgroundColor="#3496f0"/>
-                <Header />
+                <StatusBar backgroundColor='#3496f0'/>
+                {/*<Header />*/}
                 <RootStack />
             </SafeAreaView>
         )
     }
 }
-

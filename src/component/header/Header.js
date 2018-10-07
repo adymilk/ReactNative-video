@@ -30,10 +30,11 @@ export default class Header extends Component {
                         style={styles.download}
                     />
                     <Icon
-                        name="search"
+                        name="download"
                         size={19}
-                        style={styles.search}
+                        style={styles.download}
                     />
+
                 </View>
 
             </View>

@@ -53,7 +53,6 @@ class CategoryList extends Component {
     }
 
 
-
     fetchData(id){
         fetch(URL+id)
             .then((response) => response.json())
@@ -100,7 +99,7 @@ class CategoryList extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                onPress={() => this.pushToVideoDetailFromCategoryList(rowData.data)}
+                onPress={() => this.pushToVideo(rowData.data)}
             >
 
                 <View style={styles.innerView}>
@@ -112,17 +111,21 @@ class CategoryList extends Component {
         )
     }
 
-    pushToVideoDetailFromCategoryList(data){
+    pushToVideo(data){
         this.props.navigation.navigate('VideoPlayDetail',{
-            id: data.header.id,
-            icon: data.header.icon,
+            id: data.content.data.id,
+            avatar: data.content.data.author.icon,
+            updateTime: data.content.data.date,
+            owner_nickname: data.content.data.author.name,
             title: data.content.data.title,
             playUrl: data.content.data.playUrl,
-            description: data.content.data.description
+            description: data.content.data.description,
+            placeholder: data.content.data.cover.feed,
+            shareCount: data.content.data.consumption.shareCount,
+            collectionCount: data.content.data.consumption.collectionCount,
+            replyCount: data.content.data.consumption.replyCount,
         })
-
     }
-
 }
 
 

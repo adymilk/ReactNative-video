@@ -10,31 +10,17 @@ import {
     ActivityIndicator,
     Dimensions,
     ScrollView,
-    BackHandler,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import Video from 'react-native-af-video-player'
 
 
 
-const theme = {
-    title: '#FFF',
-    more: '#fff',
-    center: '#3496f0',
-    fullscreen: '#fff',
-    volume: '#fff',
-    scrubberThumb: '#fff',
-    scrubberBar: '#fff',
-    seconds: '#fff',
-    duration: '#fff',
-    progress: '#fff',
-    loading: '#3496f0'
-}
-
-
+import {theme} from '../../util/theme'
+import {getLocalTime,randomVideoPlayednum} from '../../util/function'
 
 //API
 const BASE_API = 'http://api.apiopen.top/videoRecommend?id=';
-
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -78,7 +64,9 @@ class VideoPlayDetail extends Component {
         super(props);
         this.state = {
             dataSource: null,
-            isLoaded:false
+            isLoaded:false,
+            placeholder_img: "http://oe3vwrk94.bkt.clouddn.com/head.jpeg",
+            randomVideoPlayednum: randomVideoPlayednum(),
         };
     }
 
@@ -122,12 +110,19 @@ class VideoPlayDetail extends Component {
         const title = navigation.getParam('title', 'NO-title');
         const url = navigation.getParam('playUrl', 'NO-playUrl');
         const description = navigation.getParam('description', 'NO-ID');
+        const owner_nickname = navigation.getParam('owner_nickname', 'NO-owner_nickname');
+        const avatar = navigation.getParam('avatar', 'NO-avatar');
+        const updateTime = navigation.getParam('updateTime', 'NO-updateTime');
+        const placeholder = navigation.getParam('placeholder', 'NO-placeholder');
+        const shareCount = navigation.getParam('shareCount', 'NO-shareCount');
+        const collectionCount = navigation.getParam('collectionCount', 'NO-collectionCount');
+        const replyCount = navigation.getParam('replyCount', 'NO-replyCount');
         const logo = "null";
-        const placeholder = 'null'
+
         return (
 
 
-            <ScrollView style={{flex:1,backgroundColor: '#e7e1ea',}} ref='totop'>
+            <ScrollView style={{flex:1,backgroundColor: '#f2f0f1',}} ref='totop'>
                 <View style={styles.container}>
                     <Video
                         autoPlay={false}
@@ -137,7 +132,7 @@ class VideoPlayDetail extends Component {
                         onMorePress={() => this.onMorePress()}
                         onFullScreen={status => this.onFullScreen(status)}
                         rotateToFullScreen
-                        playInBackground={true}
+                        playInBackground={false}
                         playWhenInactive={true}
                         scrollBounce={true}
                         lockPortraitOnFsExit={true}
@@ -149,6 +144,61 @@ class VideoPlayDetail extends Component {
                         <View style={styles.video_header}>
                             <Text style={styles.videoTitle}>{title}</Text>
                             <Text style={styles.description}>{description}</Text>
+                            <View style={{flex: 1,height:20,flexDirection: 'row',alignItems: 'center',
+                                }}>
+                                <Icon
+                                    name="youtube-play"
+                                    size={15}
+                                    style={{color:'#bdbdbd'}}
+                                />
+                                <Text style={{fontSize:12,marginLeft:5,}}>{this.state.randomVideoPlayednum}</Text>
+                            </View>
+                        </View>
+                        <View style={{flex: 1,flexDirection: 'row',marginTop: 5, padding: 10,backgroundColor: '#fff'}}>
+                            <View style={{flex:1}}>
+                                <Image source={{uri: avatar}}
+                                       style={{
+                                           width: 50,
+                                           height: 50,
+                                           borderRadius: 50
+                                       }}
+                                />
+                            </View>
+                            <View style={{flex:4}}>
+                                <Text>{owner_nickname}</Text>
+                                <Text>{getLocalTime(updateTime)}</Text>
+                            </View>
+                        </View>
+                        <View style={{flex: 1,flexDirection: 'row',marginTop: 1, padding: 10,paddingLeft: 30,paddingRight:30,backgroundColor: '#fff',justifyContent:'space-between'}}>
+                            <Icon
+                                name="share"
+                                size={15}
+                            >
+                                <Text> {shareCount}</Text>
+
+                            </Icon>
+                            <Icon
+                                name="star"
+                                size={15}
+                                style={styles.search}
+                            >
+                                <Text> {collectionCount}</Text>
+                            </Icon>
+                            <Icon
+                                name="thumbs-up"
+                                size={15}
+                            >
+                                <Text> {replyCount}</Text>
+                            </Icon>
+                            <Icon
+                                name="arrow-down"
+                                size={15}
+                                style={{color:'#3496f0'}}
+                                onPress={()=> Alert.alert('提示','亲、非常抱歉。此功能暂时不开放！')}
+                            >
+                                <Text> 缓存</Text>
+                            </Icon>
+
                         </View>
 
                         {
@@ -200,6 +250,7 @@ class VideoPlayDetail extends Component {
 
 
     pushToVideoDetail(data){
+        this.state.randomVideoPlayednum = randomVideoPlayednum()
         this.refs.totop.scrollTo({x:0,y: 0,animated:true});
         this.props.navigation.navigate('VideoPlayDetail',{
             id: data.id,
@@ -209,6 +260,8 @@ class VideoPlayDetail extends Component {
         })
 
     }
+
+
 
     onFullScreen(status) {
         // Set the params to pass in fullscreen status to navigationOptions
@@ -244,9 +297,8 @@ const styles = StyleSheet.create({
         // 多行显示
         flexWrap:'wrap',
         // 侧轴方向
-        backgroundColor: '#e7e1ea',
+        backgroundColor: '#f2f0f1',
         paddingBottom: 20
-
     },
     wrapStyle:{
         width: card_width,

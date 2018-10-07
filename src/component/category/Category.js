@@ -47,6 +47,16 @@ class category extends Component {
         fetch(API)
             .then((response) => response.json())
             .then((data) => {
+                //插入第一个“全部”tab
+                data.result.itemList.unshift(
+                    {
+                        "data": {
+                            "dataType": "dance",
+                            "icon": "http://oe3vwrk94.bkt.clouddn.com/category_dance.jpg",
+                            "title": "#舞蹈",
+                        }
+                    }
+                );
                 let dataList = data.result.itemList;
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
@@ -87,7 +97,7 @@ class category extends Component {
             <TouchableOpacity
                 style={styles.wrapStyle}
                 activeOpacity={0.5}
-                onPress={() => this.pushTolistVideo(rowData.data)}
+                onPress={() => this.isFirst(rowData)}
             >
 
                 <View>
@@ -99,7 +109,15 @@ class category extends Component {
         )
     }
 
-
+    isFirst(rowData){
+        if (rowData.data.dataType === 'dance'){
+            this.props.navigation.navigate('Dance',{
+                title: rowData.data.title.substr(1,rowData.data.title.length),
+            })
+        }else {
+            this.pushTolistVideo(rowData.data)
+        }
+    }
     pushTolistVideo(data){
         const title = (data.title).substr(1,data.title.length);
         this.props.navigation.navigate('CategoryList',{
@@ -122,6 +140,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         // 侧轴方向
         backgroundColor: '#e7e1ea',
+        paddingBottom: 20,
 
     },
     wrapStyle:{

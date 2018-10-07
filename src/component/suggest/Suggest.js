@@ -110,13 +110,37 @@ class Suggest extends Component {
     }
 
     pushToVideoDetail(data){
+        let updateTime
+        let avatar
+        let owner_nickname
+
+        if (data.data.content.data.owner){
+                owner_nickname=  data.data.content.data.owner.nickname
+                avatar = data.data.content.data.owner.avatar
+                updateTime = data.data.content.data.updateTime
+        }else {
+            owner_nickname=  data.data.content.data.author.name
+            avatar = data.data.content.data.author.icon
+            updateTime = data.data.content.data.date
+        }
+
         this.props.navigation.navigate('VideoPlayDetail',{
             id: data.id,
             title: data.data.content.data.title,
             playUrl: data.data.content.data.playUrl,
-            description: data.data.content.data.description
+            description: data.data.content.data.description,
+            owner_nickname: owner_nickname,
+            avatar: avatar,
+            updateTime: updateTime,
+            placeholder: data.data.content.data.cover.feed,
+            shareCount: data.data.content.data.consumption.shareCount,
+            collectionCount: data.data.content.data.consumption.collectionCount,
+            replyCount: data.data.content.data.consumption.replyCount,
         })
+
     }
+
+
 }
 
 const styles = StyleSheet.create({
