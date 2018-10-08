@@ -1,3 +1,5 @@
+import {Alert} from "react-native";
+
 function getLocalTime(timestamp) {
     let date = new Date(timestamp);
     Y = date.getFullYear() + '年';
@@ -21,7 +23,13 @@ function randomVideoPlayednum(max=50000,min=1000) {
         return num;
     }
 }
+
+function showErrorMsg(msg='亲、非常抱歉。此功能暂时不开放！') {
+    Alert.alert('提示',msg)
+}
+
 export{
     getLocalTime,
     randomVideoPlayednum,
+    showErrorMsg,
 }

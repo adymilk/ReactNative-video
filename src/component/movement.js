@@ -9,6 +9,7 @@ class MV extends React.Component {
             tabBarVisible: false,
         }
     }
+
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

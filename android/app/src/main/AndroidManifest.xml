@@ -10,6 +10,13 @@
       android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+        <!--友盟 统计-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5bbb333fb465f5db06000152" >
+        </meta-data>
+        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

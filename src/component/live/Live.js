@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
@@ -10,7 +9,6 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
 
 //请求数量
 const num = 60;
@@ -150,8 +148,8 @@ const styles = StyleSheet.create({
         height:card_height
     },
     categoryTitle:{
-        fontSize: 15,
-        fontWeight: "200",
+        fontSize: 13,
+        fontWeight: "600",
         textAlign:'center',
         padding: 5,
         width: card_width,

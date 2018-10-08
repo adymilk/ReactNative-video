@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
     Dimensions,
     ScrollView,
+    StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Video from 'react-native-af-video-player'
@@ -17,7 +18,7 @@ import Video from 'react-native-af-video-player'
 
 
 import {theme} from '../../util/theme'
-import {getLocalTime,randomVideoPlayednum} from '../../util/function'
+import {getLocalTime, randomVideoPlayednum, showErrorMsg} from '../../util/function'
 
 //API
 const BASE_API = 'http://api.apiopen.top/videoRecommend?id=';
@@ -33,6 +34,8 @@ const hMargin = 10;
 
 
 class VideoPlayDetail extends Component {
+
+
     static navigationOptions = ({ navigation }) => {
         const { state } = navigation
         // const header = state.params && (state.params.fullscreen ? undefined : null)
@@ -106,6 +109,7 @@ class VideoPlayDetail extends Component {
 
     render() {
 
+
         const { navigation } = this.props;
         const title = navigation.getParam('title', 'NO-title');
         const url = navigation.getParam('playUrl', 'NO-playUrl');
@@ -120,7 +124,10 @@ class VideoPlayDetail extends Component {
         const logo = "null";
 
         return (
-
+            <StatusBar
+                translucent={true}
+                hidden={true}
+                animated={true}/>,
 
             <ScrollView style={{flex:1,backgroundColor: '#f2f0f1',}} ref='totop'>
                 <View style={styles.container}>
@@ -173,6 +180,7 @@ class VideoPlayDetail extends Component {
                             <Icon
                                 name="share"
                                 size={15}
+                                onPress={()=> showErrorMsg()}
                             >
                                 <Text> {shareCount}</Text>
 
@@ -180,13 +188,14 @@ class VideoPlayDetail extends Component {
                             <Icon
                                 name="star"
                                 size={15}
-                                style={styles.search}
+                                onPress={()=> showErrorMsg()}
                             >
                                 <Text> {collectionCount}</Text>
                             </Icon>
                             <Icon
                                 name="thumbs-up"
                                 size={15}
+                                onPress={()=> showErrorMsg()}
                             >
                                 <Text> {replyCount}</Text>
                             </Icon>
@@ -194,7 +203,7 @@ class VideoPlayDetail extends Component {
                                 name="arrow-down"
                                 size={15}
                                 style={{color:'#3496f0'}}
-                                onPress={()=> Alert.alert('提示','亲、非常抱歉。此功能暂时不开放！')}
+                                onPress={()=> showErrorMsg()}
                             >
                                 <Text> 缓存</Text>
                             </Icon>

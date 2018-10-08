@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Suggest from './component/suggest/Suggest'
 import Live from './component/live/Live'
 import Dance from './component/category/Dance'
-import Photos from './component/Photos'
+import Communion from './component/communion/Communion'
+import CommunionDetail from './component/communion/CommunionDetail'
 import mv from './component/movement'
 import VideoPlayDetail from './component/video/VideoPlayDetail'
 import LivePlayOnWebview from './component/live/LivePlayOnWebview'
@@ -14,6 +15,7 @@ import Category from "./component/category/Category";
 import CategoryList from "./component/category/CategoryList";
 import Setting from "./component/Setting";
 import Header from "./component/header/Header";
+import {config} from "./util/defaultMsgConfig";
 
 
 const SuggestStack = createStackNavigator(
@@ -45,6 +47,11 @@ const CategoryStack = createStackNavigator(
 );
 
 
+const CommunionStack = createStackNavigator(
+    {
+        Category: Communion,
+    }
+);
 
 
 const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
@@ -54,8 +61,8 @@ const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
         推荐: SuggestStack ,
         分区: CategoryStack,
         // 舞蹈: DanceStack,
-        相册: Photos,
-        MV: movementStack
+        交流: CommunionStack,
+        动态: movementStack
     },
     {
         initialRouteName: '推荐',
@@ -72,14 +79,14 @@ const TabStack = createStackNavigator(
         tabs: MaterialTopTabNavigator,
         VideoPlayDetail: VideoPlayDetail,
         LivePlayOnWebview: LivePlayOnWebview,
-        CategoryStack: CategoryStack,
         CategoryList: CategoryList,
         Dance: Dance,
+        CommunionDetail: CommunionDetail,
 
     },
     {
         navigationOptions: {
-            header: null,
+            header: <Header/>,
         },
     }
 );
@@ -251,7 +258,10 @@ export default class App extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar backgroundColor='#3496f0'/>
+                <StatusBar
+                    backgroundColor='#3496f0'
+                    animated={true}
+                />
                 {/*<Header />*/}
                 <RootStack />
             </SafeAreaView>
