@@ -109,7 +109,9 @@ class VideoPlayDetail extends Component {
 
     render() {
 
-
+        let shareCount
+        let collectionCount
+        let replyCount
         const { navigation } = this.props;
         const title = navigation.getParam('title', 'NO-title');
         const url = navigation.getParam('playUrl', 'NO-playUrl');
@@ -118,10 +120,11 @@ class VideoPlayDetail extends Component {
         const avatar = navigation.getParam('avatar', 'NO-avatar');
         const updateTime = navigation.getParam('updateTime', 'NO-updateTime');
         const placeholder = navigation.getParam('placeholder', 'NO-placeholder');
-        const shareCount = navigation.getParam('shareCount', 'NO-shareCount');
-        const collectionCount = navigation.getParam('collectionCount', 'NO-collectionCount');
-        const replyCount = navigation.getParam('replyCount', 'NO-replyCount');
+        shareCount = navigation.getParam('shareCount', 'NO-shareCount');
+        collectionCount = navigation.getParam('collectionCount', 'NO-collectionCount');
+        replyCount = navigation.getParam('replyCount', 'NO-replyCount');
         const logo = "null";
+
 
         return (
             <StatusBar
