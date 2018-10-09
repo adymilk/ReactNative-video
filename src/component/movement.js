@@ -1,30 +1,38 @@
 import React from "react";
 import {Button, Text, View} from "react-native";
 
-class MV extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            header: null,
-            title: navigation.getParam('title', '获取title失败'),
-            tabBarVisible: false,
-        }
-    }
+import Carousel, { ParallaxImage ,Component} from 'react-native-snap-carousel';
+
+export default class MyCarousel extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.openDrawer()}
+            <Carousel
+                data={this.state.entries}
+                renderItem={MyCarousel._renderItem}
+                hasParallaxImages={true}
+            />
+        );
+    }
+
+
+
+    static _renderItem({item, index}, parallaxProps) {
+        return (
+            <View style={styles.item}>
+                <ParallaxImage
+                    source={{uri: item.thumbnail}}
+                    containerStyle={styles.imageContainer}
+                    style={styles.image}
+                    parallaxFactor={0.4}
+                    {...parallaxProps}
                 />
+                <Text style={styles.title} numberOfLines={2}>
+                    {item.title}
+                </Text>
             </View>
         );
     }
+
+
 }
-
-
-
-
-
-
-export default MV;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
@@ -11,12 +10,7 @@ import {
     Dimensions,
 } from 'react-native';
 
-//请求数量
-const num = 60;
-
-//API
-const BASE_API = 'https://activity.uc.cn/uclive2017/roomlist?__dt=4543&__t=1538403838470&uc_param_str=dsdnfrpfbivesscpgimibtbmnijblauputogpintnwchgd&tag=dance&entry=zbyp&num=';
-const API = BASE_API + num;
+import {api} from "../../config/api";
 
 
 // 计算左侧的外边距，使其居中显示
@@ -62,7 +56,7 @@ class Dance extends Component {
     }
 
     fetchData(){
-        fetch(API)
+        fetch(api.dance)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)

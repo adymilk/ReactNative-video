@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Dimensions, Image, ListView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {createStackNavigator} from "react-navigation";
-
-//API
-    const URL = 'http://api.apiopen.top/videoCategoryDetails?id=';
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    ListView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {api} from "../../config/api";
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -54,7 +60,7 @@ class CategoryList extends Component {
 
 
     fetchData(id){
-        fetch(URL+id)
+        fetch(api.categoryList+id)
             .then((response) => response.json())
             .then((data) => {
                 let dataList = data.result;

@@ -18,7 +18,7 @@ import Video from 'react-native-af-video-player'
 
 
 import {theme} from '../../util/theme'
-import {getLocalTime, randomVideoPlayednum, showErrorMsg} from '../../util/function'
+import {getLocalTime, videoViewsRandomNum, showErrorMsg} from '../../util/function'
 
 //API
 const BASE_API = 'http://api.apiopen.top/videoRecommend?id=';
@@ -69,7 +69,7 @@ class VideoPlayDetail extends Component {
             dataSource: null,
             isLoaded:false,
             placeholder_img: "http://oe3vwrk94.bkt.clouddn.com/head.jpeg",
-            randomVideoPlayednum: randomVideoPlayednum(),
+            videoViewsRandomNum: videoViewsRandomNum(),
         };
     }
 
@@ -161,7 +161,7 @@ class VideoPlayDetail extends Component {
                                     size={15}
                                     style={{color:'#bdbdbd'}}
                                 />
-                                <Text style={{fontSize:12,marginLeft:5,}}>{this.state.randomVideoPlayednum}</Text>
+                                <Text style={{fontSize:12,marginLeft:5,}}>{this.state.videoViewsRandomNum}</Text>
                             </View>
                         </View>
                         <View style={{flex: 1,flexDirection: 'row',marginTop: 5, padding: 10,backgroundColor: '#fff'}}>

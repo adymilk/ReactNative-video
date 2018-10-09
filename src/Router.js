@@ -15,7 +15,7 @@ import Category from "./component/category/Category";
 import CategoryList from "./component/category/CategoryList";
 import Setting from "./component/Setting";
 import Header from "./component/header/Header";
-import {config} from "./util/defaultMsgConfig";
+import {config} from "./config/defaultMsgConfig";
 
 
 const SuggestStack = createStackNavigator(

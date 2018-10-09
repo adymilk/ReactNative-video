@@ -2,7 +2,7 @@ import React ,{Component} from 'react'
 import {StyleSheet, View,Image,Text,Alert} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {showErrorMsg} from '../../util/function'
-import {config} from '../../util/defaultMsgConfig'
+import {config} from '../../config/defaultMsgConfig'
 
 export default class Header extends Component {
     render() {

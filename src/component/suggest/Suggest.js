@@ -9,9 +9,8 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-//API
-const URL = 'http://api.apiopen.top/todayVideo';
 
+import {api} from "../../config/api";
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
 const cols = 2;
@@ -44,7 +43,7 @@ class Suggest extends Component {
     }
 
     fetchData(){
-        fetch(URL)
+        fetch(api.suggest)
             .then((response) => response.json())
             .then((data) => {
                 let dataList = [];

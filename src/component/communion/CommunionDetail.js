@@ -4,9 +4,8 @@ import {
     BackHandler
 } from 'react-native';
 
-import {config} from "../../util/defaultMsgConfig";
-//API
-const API = 'http://211.149.159.75/xinVIdeo/?/m/';
+import {config} from "../../config/defaultMsgConfig";
+import {api} from "../../config/api";
 
 
 export default class CommunionDetail extends React.Component {
@@ -61,7 +60,7 @@ export default class CommunionDetail extends React.Component {
         return (
             <WebView
                 ref="webView"
-                source={{uri: API}}
+                source={{uri: api.communion}}
                 onNavigationStateChange={this._onNavigationStateChange}
                 mediaPlaybackRequiresUserAction={false}
                 startInLoadingState={true}

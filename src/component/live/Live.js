@@ -9,13 +9,8 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
+import {api} from "../../config/api";
 
-//请求数量
-const num = 60;
-
-//API
-const BASE_API = 'https://activity.uc.cn/uclive2017/roomlist?__dt=1392&__t=1538401886632&uc_param_str=dsdnfrpfbivesscpgimibtbmnijblauputogpintnwchgd&tag=live&entry=zbyp&num=';
-const API = BASE_API + num;
 
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
@@ -47,7 +42,7 @@ class Live extends Component {
     }
 
     fetchData(){
-        fetch(API)
+        fetch(api.live)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
