@@ -12,7 +12,7 @@ function getLocalTime(timestamp) {
     return Y+M+D+h+m+s;
 }
 
-function videoViewsRandomNum(max=50000,min=1000) {
+function getVideoViewsRandomNum(max=50000,min=1000) {
     let num = Math.floor(Math.random()*(max-min+1)+min);
     if (num >= 10000){
         //保留两位小数
@@ -30,6 +30,6 @@ function showErrorMsg(msg='亲、非常抱歉。此功能暂时不开放！') {
 
 export{
     getLocalTime,
-    videoViewsRandomNum,
+    getVideoViewsRandomNum,
     showErrorMsg,
 }

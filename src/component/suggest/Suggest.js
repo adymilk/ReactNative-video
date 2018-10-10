@@ -19,7 +19,7 @@ const marginLeft = 8;
 const card_width = Number.parseInt((width - (cols+1)*marginLeft) / (cols));
 const card_height = 120;
 const hMargin = 10;
-
+let dataHotList = [];
 
 class Suggest extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -39,25 +39,29 @@ class Suggest extends Component {
     }
 
     componentDidMount(){
+        this.fetchHotData();
         this.fetchData();
     }
 
     fetchData(){
-        fetch(api.suggest)
+        fetch(api.hot)
             .then((response) => response.json())
             .then((data) => {
-                let dataList = [];
-                for(let i=0; i<data.result.length; i++){
-                    if (data.result[i].type !== "textCard"){
-                        if (data.result[i].data.content.data.title === ""){
-                            data.result[i].data.content.data.title = data.result[i].data.content.data.description;
+                let preDataList = [];
+
+                for(let i=0; i<data.itemList.length; i++){
+                    if (data.itemList[i].type === 'video'){
+                        if (data.itemList[i].data.title === ""){
+                            data.itemList[i].data.title = data.itemList[i].data.description;
                         }
 
-                        dataList.push(data.result[i]);
+                        preDataList.push(data.itemList[i]);
                     }
                 }
 
-                console.log(dataList)
+                //数组合并
+                let dataList = preDataList.concat(dataHotList);
+
                 this.setState({
                     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(dataList),
                     isLoaded:true
@@ -72,6 +76,34 @@ class Suggest extends Component {
             })
             .done()
     }
+
+    fetchHotData(){
+        fetch(api.suggest)
+            .then((response) => response.json())
+            .then((data) => {
+                for(let i=0; i<data.itemList.length; i++){
+                    if (data.itemList[i].type === 'video'){
+                        if (data.itemList[i].data.title === ""){
+                            data.itemList[i].data.title = data.itemList[i].data.description;
+                        }
+
+                        dataHotList.push(data.itemList[i]);
+                    }
+                }
+
+                console.log(dataHotList)
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    dataSource: null,
+                    isLoaded:false
+                })
+            })
+            .done()
+    }
+
+
 
     render() {
         return (
@@ -101,8 +133,8 @@ class Suggest extends Component {
             >
 
                 <View style={styles.innerView}>
-                    <Image source={{uri:rowData.data.content.data.cover.feed}} style={styles.imgView} />
-                    <Text style={styles.categoryTitle}>{rowData.data.content.data.title ? (rowData.data.content.data.title.length > 18 ? rowData.data.content.data.title.substr(0, 18) + "..." : rowData.data.content.data.title) : ""}</Text>
+                    <Image source={{uri:rowData.data.cover.feed }} style={styles.imgView} />
+                    <Text style={styles.categoryTitle}>{rowData.data.title ? (rowData.data.title.length > 18 ? rowData.data.title.substr(0, 18) + "..." : rowData.data.title) : ""}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -113,28 +145,32 @@ class Suggest extends Component {
         let avatar
         let owner_nickname
 
-        if (data.data.content.data.owner){
-                owner_nickname=  data.data.content.data.owner.nickname
-                avatar = data.data.content.data.owner.avatar
-                updateTime = data.data.content.data.updateTime
-        }else {
-            owner_nickname=  data.data.content.data.author.name
-            avatar = data.data.content.data.author.icon
-            updateTime = data.data.content.data.date
-        }
+        // if (data.data.author){
+        //         owner_nickname=  data.data.author.name
+        //         avatar = data.data.author.icon
+        //         updateTime = ata.data.releaseTime
+        // }else {
+        //     owner_nickname=  data.data.content.data.author.name
+        //     avatar = data.data.content.data.author.icon
+        //     updateTime = data.data.content.data.date
+        // }
+
+        owner_nickname=  data.data.author.name
+        avatar = data.data.author.icon
+        updateTime = data.data.releaseTime
 
         this.props.navigation.navigate('VideoPlayDetail',{
-            id: data.id,
-            title: data.data.content.data.title,
-            playUrl: data.data.content.data.playUrl,
-            description: data.data.content.data.description,
+            id: data.data.id,
+            title: data.data.title,
+            description: data.data.description,
+            playUrl: data.data.playUrl,
             owner_nickname: owner_nickname,
             avatar: avatar,
             updateTime: updateTime,
-            placeholder: data.data.content.data.cover.feed,
-            shareCount: data.data.content.data.consumption.shareCount,
-            collectionCount: data.data.content.data.consumption.collectionCount,
-            replyCount: data.data.content.data.consumption.replyCount,
+            placeholder: data.data.cover.feed,
+            shareCount: data.data.consumption.shareCount,
+            collectionCount: data.data.consumption.collectionCount,
+            replyCount: data.data.consumption.replyCount,
         })
 
     }

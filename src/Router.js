@@ -67,7 +67,7 @@ const MaterialTopTabNavigator =  createMaterialTopTabNavigator(
     {
         initialRouteName: '推荐',
         animationEnabled: true,
-        lazy: true,
+        // lazy: true,//由于部分接口请求时间较长，所以暂时取消lazy
         // swipeEnabled: false,
         scrollEnabled: true,
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
@@ -10,10 +9,7 @@ import {
     ActivityIndicator,
     Dimensions,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-//API
-const API = 'http://api.apiopen.top/videoCategory';
-
+import {api} from "../../config/api";
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
 const cols = 2;
@@ -44,7 +40,7 @@ class category extends Component {
     }
 
     fetchData(){
-        fetch(API)
+        fetch(api.category)
             .then((response) => response.json())
             .then((data) => {
                 //插入第一个“全部”tab

@@ -18,11 +18,9 @@ import Video from 'react-native-af-video-player'
 
 
 import {theme} from '../../util/theme'
-import {getLocalTime, videoViewsRandomNum, showErrorMsg} from '../../util/function'
+import {getLocalTime, getVideoViewsRandomNum, showErrorMsg} from '../../util/function'
 
-//API
-const BASE_API = 'http://api.apiopen.top/videoRecommend?id=';
-
+import {api} from "../../config/api";
 // 计算左侧的外边距，使其居中显示
 const {width,height} = Dimensions.get('window');
 const cols = 1;
@@ -69,7 +67,7 @@ class VideoPlayDetail extends Component {
             dataSource: null,
             isLoaded:false,
             placeholder_img: "http://oe3vwrk94.bkt.clouddn.com/head.jpeg",
-            videoViewsRandomNum: videoViewsRandomNum(),
+            videoViewsRandomNum: getVideoViewsRandomNum(),
         };
     }
 
@@ -82,7 +80,7 @@ class VideoPlayDetail extends Component {
     fetchData(id){
         id === 0 ? id = 110763 : id = id;
         // alert(id);
-        fetch(BASE_API+id)
+        fetch(api.videoRecommend+id)
             .then((response) => response.json())
             .then((data) => {
                 let dataList = [];
@@ -262,7 +260,7 @@ class VideoPlayDetail extends Component {
 
 
     pushToVideoDetail(data){
-        this.state.randomVideoPlayednum = randomVideoPlayednum()
+        this.state.videoViewsRandomNum = getVideoViewsRandomNum()
         this.refs.totop.scrollTo({x:0,y: 0,animated:true});
         this.props.navigation.navigate('VideoPlayDetail',{
             id: data.id,
