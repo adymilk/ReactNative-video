@@ -46,7 +46,7 @@ const TabStack = createStackNavigator(
 
 2、更改安卓项目包名后，运行报错 `Application adymilk.xinvideohasnotbeenregistered`
 如图：
-![图片来源网络](http://oe3vwrk94.bkt.clouddn.com/20181009-1.png)
+![图片来源网络](http://img.0551shengteng.cn/20181009-1.png)
 
 解决方法如下：
 
