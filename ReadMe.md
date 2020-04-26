@@ -1,5 +1,5 @@
 # 软件名称：昕视界
-![](20200426-1.jpg)
+![](https://gitee.com/adymilk/adymilkxinVIdeo/raw/master/20200426-1.jpg)
 
 ## [apk 下载体验](https://gitee.com/adymilk/adymilkxinVIdeo/blob/master/android/app/release/app-release.apk)
 
